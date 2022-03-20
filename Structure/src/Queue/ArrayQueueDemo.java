@@ -9,7 +9,12 @@ class ArrayQueue {
     private int front;  //队列头，指向队列头部的前一个位置
     private int rear;   //队列尾，指向队列尾部，就是队列最后的一个数据
     private int[] arr;  //数组模拟队列
+    //默认最大容量为10
     public ArrayQueue() {
+        this.maxSize = 10;
+        this.arr = new int[10];
+        this.front = -1;
+        this.rear = -1;
     }
     //创建队列的构造器
     public ArrayQueue(int arrMaxSize) {
