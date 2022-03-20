@@ -64,11 +64,10 @@ public class ArrayQueueDemo {
 
 //使用数组模拟队列编写一个ArrayQueue类
 class ArrayQueue {
-    private int maxSize; //表示数组的最大容量
-    private int front;  //队列头，指向队列头部的前一个位置
-    private int rear;   //队列尾，指向队列尾部，就是队列最后的一个数据
+    private int maxSize; //表示数组的最大容量，默认最大容量为10
+    private int front;  //队列头，指向队列头部的前一个位置，默认值为-1
+    private int rear;   //队列尾，指向队列尾部，就是队列最后的一个数据，默认值为-1
     private int[] arr;  //数组模拟队列
-    //默认最大容量为10
     public ArrayQueue() {
         this.maxSize = 10;
         this.arr = new int[10];
