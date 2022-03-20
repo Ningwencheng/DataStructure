@@ -5,6 +5,7 @@ import java.util.Scanner;
 //测试程序
 public class ArrayQueueDemo {
     public static void main(String[] args) {
+        System.out.println("测试数组模拟队列==============================>");
         ArrayQueue arrayQueue = new ArrayQueue(3);
         char key = ' ';     //接收用户输入
         Scanner scanner = new Scanner(System.in);
@@ -20,7 +21,7 @@ public class ArrayQueueDemo {
                 case 'e':
                     scanner.close();
                     System.out.println("成功退出程序");
-                    break;
+                    break;  //return; 也行
                 case 'a':
                     if(arrayQueue.isFull()) {
                         System.out.println("队列已满，不能加入数据");
@@ -62,7 +63,7 @@ public class ArrayQueueDemo {
     }
 }
 
-//使用数组模拟队列编写一个ArrayQueue类
+//使用数组模拟队列编写一个ArrayQueue类，最大存储容量为：maxSize
 class ArrayQueue {
     private int maxSize; //表示数组的最大容量，默认最大容量为10
     private int front;  //队列头，指向队列头部的前一个位置，默认值为-1
@@ -148,7 +149,7 @@ class ArrayQueue {
         }
         System.out.println("队列中的数据为：");
         for(int i = front + 1; i <= rear; i++) {
-            System.out.print(arr[i] + "\t");
+            System.out.printf("arr[%d] = %d\t", i, arr[i]);
         }
         System.out.println();
     }
