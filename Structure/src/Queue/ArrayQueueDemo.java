@@ -25,7 +25,7 @@ public class ArrayQueueDemo {
                     if(arrayQueue.isFull()) {
                         System.out.println("队列已满，不能加入数据");
                     } else {
-                        System.out.println("请输入一个数字：");
+                        System.out.print("请输入一个数字：");
                         int addValue = scanner.nextInt();
                         arrayQueue.addQueue(addValue);
                     }
