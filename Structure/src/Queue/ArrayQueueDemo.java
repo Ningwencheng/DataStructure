@@ -1,6 +1,65 @@
 package Queue;
 
+import java.util.Scanner;
+
+//测试程序
 public class ArrayQueueDemo {
+    public static void main(String[] args) {
+        ArrayQueue arrayQueue = new ArrayQueue(3);
+        char key = ' ';     //接收用户输入
+        Scanner scanner = new Scanner(System.in);
+        //输出一个菜单
+        printMenu();
+        while(key != 'e') {
+            System.out.print("请输入你的选择：");
+            key = scanner.next().charAt(0);
+            switch(key) {
+                case 's':
+                    arrayQueue.showQueue();
+                    break;
+                case 'e':
+                    scanner.close();
+                    System.out.println("成功退出程序");
+                    break;
+                case 'a':
+                    if(arrayQueue.isFull()) {
+                        System.out.println("队列已满，不能加入数据");
+                    } else {
+                        System.out.println("请输入一个数字：");
+                        int addValue = scanner.nextInt();
+                        arrayQueue.addQueue(addValue);
+                    }
+                    break;
+                case 'g':
+                    try {
+                        int getValue = arrayQueue.getQueue();
+                        System.out.println("取出的数据是" + getValue);
+                    } catch (RuntimeException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+                case 'h':
+                    try {
+                        int getValue = arrayQueue.headQueue();
+                        System.out.println("头数据是" + getValue);
+                    } catch (RuntimeException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+                default:
+                    System.out.println("请输入正确的选项！");
+            }
+        }
+    }
+    //显示用户选项
+    public static void printMenu() {
+        System.out.println("s(show)：显示队列");
+        System.out.println("e(exit)：退出程序");
+        System.out.println("a(add)：添加数据到队列");
+        System.out.println("g(get)：从队列取出数据");
+        System.out.println("h(head)；查看队列头的数据");
+        System.out.println();
+    }
 }
 
 //使用数组模拟队列编写一个ArrayQueue类
@@ -84,10 +143,25 @@ class ArrayQueue {
         return arr[front];
     }
     public void showQueue() {
+        if(isEmpty()) {
+            System.out.println("队列为空！");
+            return;
+        }
         System.out.println("队列中的数据为：");
         for(int i = front + 1; i <= rear; i++) {
             System.out.print(arr[i] + "\t");
         }
         System.out.println();
+    }
+
+    /**
+     * 返回队列的头结点数据
+     * @return 头结点数据
+     */
+    public int headQueue() {
+        if(isEmpty()) {
+            throw new RuntimeException("队列为空！");
+        }
+        return arr[front + 1];
     }
 }
