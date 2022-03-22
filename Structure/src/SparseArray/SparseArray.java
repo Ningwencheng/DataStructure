@@ -1,5 +1,7 @@
 package SparseArray;
 
+import java.io.*;
+
 public class SparseArray {
     public static void main(String[] args) {
         //创建一个原始的二维数组，大小为11×11
@@ -13,7 +15,7 @@ public class SparseArray {
         //将二维数组转成稀疏数组
         //1.先遍历二维数组，得到非0数据的个数
         int sum = 0;
-        for(int i = 0; i < chessArr1.length; i++) {
+        for (int i = 0; i < chessArr1.length; i++) {
             for(int j = 0; j < chessArr1[i].length; j++) {
                 if(chessArr1[i][j] != 0)
                     sum++;
@@ -44,12 +46,53 @@ public class SparseArray {
         System.out.println("得到的稀疏数组为：");
         printArray(sparseArr);
 
+        //  序列化(Serialize)
+        ObjectOutputStream oos = null;
+        try {
+            oos = new ObjectOutputStream(new FileOutputStream("map.data"));
+            oos.writeObject(sparseArr);
+            oos.flush();
+        } catch (IOException e) {
+            //e.printStackTrace();
+            System.out.println(e.getMessage());
+        } finally {
+            if(oos != null) {
+                try {
+                    oos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+        //  反序列化(deserialize)
+        Object obj = null;
+        ObjectInputStream ois = null;
+        try {
+            ois = new ObjectInputStream(new FileInputStream("map.data"));
+            obj = ois.readObject();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if(ois != null) {
+                try {
+                    ois.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        int[][] sparseArr1 = (int[][])obj;
+
         //将稀疏数组恢复成原始的二维数组
         //1.先读取稀疏数组的第一行，根据第一行的数组，创建原始的二维数组
-        int[][] chessArr2 = new int[sparseArr[0][0]][sparseArr[0][1]];
+        int[][] chessArr2 = new int[sparseArr1[0][0]][sparseArr1[0][1]];
         //2.读取稀疏数组后几行的数据，并赋给二维数组
-        for(int i = 1; i < sparseArr.length; i++) {
-            chessArr2[sparseArr[i][0]][sparseArr[i][1]] = sparseArr[i][2];
+        for(int i = 1; i < sparseArr1.length; i++) {
+            chessArr2[sparseArr1[i][0]][sparseArr1[i][1]] = sparseArr1[i][2];
         }
         //输出恢复后的二维数组
         printArray(chessArr2);
