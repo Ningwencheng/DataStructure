@@ -1,5 +1,9 @@
 package LinkedList;
 
+/*
+ *  存在的问题
+ *      printSingleLinkedList方法打印输出的内容根据位置的不同而不同 😭️
+ */
 public class SingleLinkedListDemo {
     public static void main(String[] args) {
         //先创建节点
@@ -7,32 +11,63 @@ public class SingleLinkedListDemo {
         HeroNode heroNode2 = new HeroNode(2, "卢俊义", "玉麒麟");
         HeroNode heroNode3 = new HeroNode(3, "吴用", "智多星");
         HeroNode heroNode4 = new HeroNode(4, "林冲", "豹子头");
-        //HeroNode newHeroNode = new HeroNode(4, "林冲====", "豹=子=头");
 
+        System.out.println("单链表singleLinkedList:");
         //创建节点直接加入到尾部的单链表
         SingleLinkedList singleLinkedList = new SingleLinkedList();
-        //singleLinkedList.updateHeroNode(newHeroNode);
         //将节点加入链表中
         singleLinkedList.add(heroNode1);
-        //singleLinkedList.updateHeroNode(newHeroNode);
         singleLinkedList.add(heroNode4);
         singleLinkedList.add(heroNode3);
         singleLinkedList.add(heroNode2);
-        //singleLinkedList.updateHeroNode(newHeroNode);
-        singleLinkedList.deleteHeroNode(3);
-        singleLinkedList.deleteHeroNode(3);
         singleLinkedList.printSingleLinkedList();
 
-
+        //System.out.println(findLastIndexNode(singleLinkedList.getHead(), 1));
         //创建节点按no顺序添加的单链表
+        System.out.println("单链表singleLinkedListByOrder:");
         SingleLinkedList singleLinkedListByOrder = new SingleLinkedList();
         singleLinkedListByOrder.addByOrder(heroNode1);
         singleLinkedListByOrder.addByOrder(heroNode4);
         singleLinkedListByOrder.addByOrder(heroNode2);
         singleLinkedListByOrder.addByOrder(heroNode3);
-        singleLinkedListByOrder.addByOrder(heroNode1);
         singleLinkedListByOrder.printSingleLinkedList();
 
+        //System.out.println(findLastIndexNode(singleLinkedListByOrder.getHead(), 1));
+
+        singleLinkedList.printSingleLinkedList();
+    }
+
+    /**
+     * 链表的长度
+     * @param head 链表的头结点
+     * @return  返回的是链表有效节点的个数   (不算头结点)
+     */
+    public static int getLength(HeroNode head) {
+        int length = 0;
+        HeroNode temp = head;
+        while(temp.getNext() != null) {
+            length++;
+            temp = temp.getNext();
+        }
+        return length;
+    }
+
+    /**
+     * 查找单链表中的倒数第 K 个节点
+     * @param head  链表的头结点
+     * @param index 倒数第 index 个节点
+     * @return  找到符合要求的节点
+     */
+    public static HeroNode findLastIndexNode(HeroNode head, int index) {
+        if(getLength(head) < index || index <= 0) {
+            return null;
+        }
+        int count = getLength(head) - index + 1;
+        HeroNode temp = head;
+        for (int i = 1; i <= count; i++) {
+            temp = temp.getNext();
+        }
+        return temp;
     }
 }
 
@@ -87,7 +122,9 @@ class HeroNode {
 //定义 SingleLinkedList(带头节点的单链表) 实现一些功能
 class SingleLinkedList {
     //先初始化一个头结点
-    private HeroNode head = new HeroNode(0,null,null);
+    private HeroNode head = new HeroNode(0, null, null);
+    public SingleLinkedList() {
+    }
     //返回头结点
     public HeroNode getHead() {
         return this.head;
