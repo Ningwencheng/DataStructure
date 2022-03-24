@@ -3,6 +3,11 @@ package LinkedList;
 /*
  *  存在的问题
  *      printSingleLinkedList方法打印输出的内容根据位置的不同而不同 😭️
+ *  ==================================================================
+ *  最终理解了，是我傻了。以上为正常情况。
+ *  第二次创建单链表时是基于第一个单链表上的节点，意思是没有创建新的节点，两个头结点
+ *  最终共用一个链表。
+ *
  */
 public class SingleLinkedListDemo {
     public static void main(String[] args) {
@@ -14,7 +19,7 @@ public class SingleLinkedListDemo {
 
         System.out.println("单链表singleLinkedList:");
         //创建节点直接加入到尾部的单链表
-        SingleLinkedList singleLinkedList = new SingleLinkedList();
+        SingleLinkedList singleLinkedList = new SingleLinkedList(new HeroNode(0,"0","0"));
         //将节点加入链表中
         singleLinkedList.add(heroNode1);
         singleLinkedList.add(heroNode4);
@@ -25,7 +30,7 @@ public class SingleLinkedListDemo {
         //System.out.println(findLastIndexNode(singleLinkedList.getHead(), 1));
         //创建节点按no顺序添加的单链表
         System.out.println("单链表singleLinkedListByOrder:");
-        SingleLinkedList singleLinkedListByOrder = new SingleLinkedList();
+        SingleLinkedList singleLinkedListByOrder = new SingleLinkedList(new HeroNode(-1,"-1","-1"));
         singleLinkedListByOrder.addByOrder(heroNode1);
         singleLinkedListByOrder.addByOrder(heroNode4);
         singleLinkedListByOrder.addByOrder(heroNode2);
@@ -122,12 +127,16 @@ class HeroNode {
 //定义 SingleLinkedList(带头节点的单链表) 实现一些功能
 class SingleLinkedList {
     //先初始化一个头结点
-    private HeroNode head = new HeroNode(0, null, null);
-    public SingleLinkedList() {
+    private HeroNode head;
+    public SingleLinkedList(HeroNode head) {
+        this.head = head;
+    }
+    public void setHead(HeroNode head) {
+        this.head = head;
     }
     //返回头结点
     public HeroNode getHead() {
-        return this.head;
+        return head;
     }
 
     /**
